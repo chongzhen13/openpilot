@@ -36,6 +36,7 @@ class ET:
 # get event name from enum
 EVENT_NAME = {v: k for k, v in EventName.schema.enumerants.items()}
 
+
 class Events:
   def __init__(self):
     self.events = []
@@ -210,6 +211,8 @@ def wrong_car_mode_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: boo
 EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, bool], Alert]]]] = {
   # ********** events with no alerts **********
 
+  EventName.commIssueWarning: {},
+
   # ********** events only containing alerts displayed in all states **********
 
   EventName.debugAlert: {
@@ -249,6 +252,14 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
       "Dashcam mode for unsupported car",
       "Always keep hands on wheel and eyes on road",
       AlertStatus.normal, AlertSize.mid,
+      Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 15.),
+  },
+
+  EventName.startupOneplus: {
+    ET.PERMANENT: Alert(
+      "WARNING: Original EON deprecated",
+      "Device will no longer update",
+      AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 15.),
   },
 
